@@ -1,31 +1,27 @@
-#include <iostream>
-#include <string>
 #include <cstring>
-#include <vector>
+#include <iostream>
 #include <memory>
+#include <string>
+#include <vector>
 using namespace std;
 
 class FormattedText
 {
   string plain_text;
-  bool *caps;
-public:
-  explicit FormattedText(const string& plainText)
-    : plain_text{plainText}
+  bool* caps;
+
+ public:
+  explicit FormattedText(const string& plainText) : plain_text{plainText}
   {
     caps = new bool[plainText.length()];
     memset(caps, 0, plain_text.length());
   }
-  ~FormattedText()
-  {
-    delete[] caps;
-  }
+  ~FormattedText() { delete[] caps; }
   void capitalize(int start, int end)
   {
-    for (int i = start; i <= end; ++i)
-      caps[i] = true;
+    for (int i = start; i <= end; ++i) caps[i] = true;
   }
-  
+
   friend std::ostream& operator<<(std::ostream& os, const FormattedText& obj)
   {
     string s;
@@ -40,28 +36,22 @@ public:
 
 class BetterFormattedText
 {
-public:
+ public:
   struct TextRange
   {
     int start, end;
     bool capitalize, bold, italic;
 
-    bool covers(int position) const
-    {
-      return position >= start && position <= end;
-    }
+    bool covers(int position) const { return position >= start && position <= end; }
   };
 
   TextRange& get_range(int start, int end)
   {
-    formatting.emplace_back(TextRange{ start, end });
+    formatting.emplace_back(TextRange{start, end});
     return *formatting.rbegin();
   }
 
-  explicit BetterFormattedText(const string& plainText)
-    : plain_text{plainText}
-  {
-  }
+  explicit BetterFormattedText(const string& plainText) : plain_text{plainText} {}
 
   friend std::ostream& operator<<(std::ostream& os, const BetterFormattedText& obj)
   {
@@ -71,15 +61,14 @@ public:
       auto c = obj.plain_text[i];
       for (const auto& rng : obj.formatting)
       {
-        if (rng.covers(i) && rng.capitalize)
-          c = toupper(c);
+        if (rng.covers(i) && rng.capitalize) c = toupper(c);
         s += c;
       }
     }
     return os << s;
   }
 
-private:
+ private:
   string plain_text;
   vector<TextRange> formatting;
 };

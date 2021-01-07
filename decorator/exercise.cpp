@@ -1,8 +1,8 @@
 #include <iostream>
-#include <string>
-#include <vector>
 #include <numeric>
 #include <sstream>
+#include <string>
+#include <vector>
 using namespace std;
 
 struct Flower
@@ -12,26 +12,26 @@ struct Flower
 
 struct Rose : Flower
 {
-  string str() override {
-    return "A rose";
-  }
+  string str() override { return "A rose"; }
 };
 
 struct RedFlower : Flower
 {
   Flower& flower;
 
-  RedFlower(Flower &flower) : flower(flower) {}
+  RedFlower(Flower& flower) : flower(flower) {}
 
   string str() override
   {
     string s = flower.str();
-    if (s.find("red") != string::npos) return s;
+    if (s.find("red") != string::npos)
+      return s;
     else if (s.find("blue") != string::npos)
     {
       return s + " and red";
     }
-    else return s + " that is red";
+    else
+      return s + " that is red";
   }
 };
 
@@ -39,17 +39,19 @@ struct BlueFlower : Flower
 {
   Flower& flower;
 
-  BlueFlower(Flower &flower) : flower(flower) {}
+  BlueFlower(Flower& flower) : flower(flower) {}
 
   string str() override
   {
     string s = flower.str();
-    if (s.find("blue") != string::npos) return s;
+    if (s.find("blue") != string::npos)
+      return s;
     else if (s.find("red") != string::npos)
     {
       return s + " and blue";
     }
-    else return s + " that is blue";
+    else
+      return s + " that is blue";
   }
 };
 

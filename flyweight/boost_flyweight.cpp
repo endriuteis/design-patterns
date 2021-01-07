@@ -1,6 +1,6 @@
 ﻿#include <iostream>
-#include <string>
 #include <cstdint>
+#include <string>
 using namespace std;
 
 #include <boost/bimap.hpp>
@@ -15,9 +15,7 @@ struct User
   flyweight<string> first_name, last_name;
   // ...
 
-  User(const string& first_name, const string& last_name) :
-    first_name{first_name},
-    last_name{last_name} {}
+  User(const string& first_name, const string& last_name) : first_name{first_name}, last_name{last_name} {}
 };
 
 int main(int ac, char* av[])

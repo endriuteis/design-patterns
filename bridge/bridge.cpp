@@ -31,41 +31,30 @@ struct RasterRenderer : Renderer
 
 struct Shape
 {
-protected:
+ protected:
   Renderer& renderer;
-  Shape(Renderer& renderer) : renderer{ renderer } {}
-public:
-  virtual void draw() = 0; // implementation specific
-  virtual void resize(float factor) = 0; // abstraction specific
+  Shape(Renderer& renderer) : renderer{renderer} {}
+
+ public:
+  virtual void draw() = 0;                // implementation specific
+  virtual void resize(float factor) = 0;  // abstraction specific
 };
 
 struct Circle : Shape
 {
   float x, y, radius;
 
-  void draw() override
-  {
-    renderer.render_circle(x, y, radius);
-  }
+  void draw() override { renderer.render_circle(x, y, radius); }
 
-  void resize(float factor) override
-  {
-    radius *= factor;
-  }
+  void resize(float factor) override { radius *= factor; }
 
-  Circle(Renderer& renderer, float x, float y, float radius)
-    : Shape{renderer},
-      x{x},
-      y{y},
-      radius{radius}
-  {
-  }
+  Circle(Renderer& renderer, float x, float y, float radius) : Shape{renderer}, x{x}, y{y}, radius{radius} {}
 };
 
 int main()
 {
   RasterRenderer rr;
-  Circle raster_circle{ rr, 5,5,5 };
+  Circle raster_circle{rr, 5, 5, 5};
   raster_circle.draw();
   raster_circle.resize(2);
   raster_circle.draw();

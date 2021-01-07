@@ -19,10 +19,7 @@ struct TokenMachine
 {
   vector<shared_ptr<Token>> tokens;
 
-  Memento add_token(int value)
-  {
-    return add_token(make_shared<Token>(value));
-  }
+  Memento add_token(int value) { return add_token(make_shared<Token>(value)); }
 
   // adds the token to the set of tokens and returns the
   // snapshot of the entire system
@@ -30,8 +27,7 @@ struct TokenMachine
   {
     tokens.push_back(token);
     Memento m;
-    for (auto t : tokens)
-      m.tokens.emplace_back(make_shared<Token>(t->value));
+    for (auto t : tokens) m.tokens.emplace_back(make_shared<Token>(t->value));
     return m;
   }
 
@@ -39,8 +35,7 @@ struct TokenMachine
   void revert(const Memento &m)
   {
     tokens.clear();
-    for (auto t : m.tokens)
-      tokens.emplace_back(make_shared<Token>(t->value));
+    for (auto t : m.tokens) tokens.emplace_back(make_shared<Token>(t->value));
   }
 };
 

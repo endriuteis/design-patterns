@@ -16,16 +16,16 @@ using namespace std;
 
 int main()
 {
-    Person p = Person::create()
-                   .lives()
-                   .at("123 London Road")
-                   .with_postcode("SW1 1GB")
-                   .in("London")
-                   .works()
-                   .at("FCA")
-                   .as_a("Software Engineer")
-                   .earning(1000);
+  Person p = Person::create()
+                 .lives()
+                 .at("123 London Road")
+                 .with_postcode("SW1 1GB")
+                 .in("London")
+                 .works()
+                 .at("FCA")
+                 .as_a("Software Engineer")
+                 .earning(1000);
 
-    cout << p << endl;
-    return 0;
+  cout << p << endl;
+  return 0;
 }

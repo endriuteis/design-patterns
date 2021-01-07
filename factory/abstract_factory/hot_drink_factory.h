@@ -3,5 +3,5 @@
 
 struct HotDrinkFactory
 {
-    virtual unique_ptr<HotDrink> make() const = 0;
+  virtual unique_ptr<HotDrink> make() const = 0;
 };

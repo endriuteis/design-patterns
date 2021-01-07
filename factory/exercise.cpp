@@ -11,7 +11,7 @@ struct Person
 
 class PersonFactory
 {
-public:
+ public:
   Person create_person(const string &name)
   {
     Person p;

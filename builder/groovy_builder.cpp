@@ -15,61 +15,53 @@ using namespace std;
 
 struct Tag
 {
-    string name;
-    string text;
-    vector<Tag> children;
-    vector<pair<string, string>> attributes;
+  string name;
+  string text;
+  vector<Tag> children;
+  vector<pair<string, string>> attributes;
 
-    friend std::ostream &operator<<(std::ostream &os, const Tag &tag)
+  friend std::ostream &operator<<(std::ostream &os, const Tag &tag)
+  {
+    os << "<" << tag.name;
+
+    for (const auto &att : tag.attributes) os << " " << att.first << "=\"" << att.second << "\"";
+
+    if (tag.children.size() == 0 && tag.text.length() == 0)
     {
-        os << "<" << tag.name;
+      os << "/>" << std::endl;
+    }
+    else
+    {
+      os << ">" << std::endl;
 
-        for (const auto &att : tag.attributes)
-            os << " " << att.first << "=\"" << att.second << "\"";
+      if (tag.text.length()) os << tag.text << std::endl;
 
-        if (tag.children.size() == 0 && tag.text.length() == 0)
-        {
-            os << "/>" << std::endl;
-        }
-        else
-        {
-            os << ">" << std::endl;
+      for (const auto &child : tag.children) os << child;
 
-            if (tag.text.length())
-                os << tag.text << std::endl;
-
-            for (const auto &child : tag.children)
-                os << child;
-
-            os << "</" << tag.name << ">" << std::endl;
-        }
-
-        return os;
+      os << "</" << tag.name << ">" << std::endl;
     }
 
-protected:
-    Tag(const string &name, const string &text) : name(name), text(text) {}
-    Tag(const string &name, const vector<Tag> &children) : name(name), children(children) {}
+    return os;
+  }
+
+ protected:
+  Tag(const string &name, const string &text) : name(name), text(text) {}
+  Tag(const string &name, const vector<Tag> &children) : name(name), children(children) {}
 };
 
 struct P : Tag
 {
-    P(const string &text) : Tag("p", text) {}
-    P(initializer_list<Tag> children) : Tag("p", children) {}
+  P(const string &text) : Tag("p", text) {}
+  P(initializer_list<Tag> children) : Tag("p", children) {}
 };
 
 struct IMG : Tag
 {
-    explicit IMG(const string &url) : Tag("img", "")
-    {
-        attributes.emplace_back(make_pair("src", url));
-    }
+  explicit IMG(const string &url) : Tag("img", "") { attributes.emplace_back(make_pair("src", url)); }
 };
 
 int main()
 {
-    cout << P{
-                IMG{"http;//pokemon.com/pikachu.png"}}
-         << endl;
-    return 0;
+  cout << P{IMG{"http;//pokemon.com/pikachu.png"}} << endl;
+  return 0;
 }

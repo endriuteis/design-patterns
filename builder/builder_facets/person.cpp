@@ -3,7 +3,4 @@
 
 using namespace std;
 
-PersonBuilder Person::create()
-{
-    return PersonBuilder();
-}
+PersonBuilder Person::create() { return PersonBuilder(); }

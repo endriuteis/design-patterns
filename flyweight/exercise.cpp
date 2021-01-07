@@ -1,9 +1,9 @@
-#include <string>
-#include <iostream>
-#include <sstream>
-#include <vector>
-#include <iterator>
 #include <algorithm>
+#include <iostream>
+#include <iterator>
+#include <sstream>
+#include <string>
+#include <vector>
 using namespace std;
 
 struct Sentence
@@ -23,7 +23,7 @@ struct Sentence
 
   WordToken& operator[](size_t index)
   {
-    if(index >= 0 && index < word_tokens.size())
+    if (index >= 0 && index < word_tokens.size())
       return word_tokens.at(index);
     else
       throw std::runtime_error("Index of out bounds");
@@ -32,14 +32,12 @@ struct Sentence
   string str() const
   {
     std::ostringstream oss;
-    for(int i=0; i< words.size(); i++)
+    for (int i = 0; i < words.size(); i++)
     {
       string word{words[i]};
-      if(word_tokens[i].capitalize)  
-        transform(word.begin(), word.end(), word.begin(), ::toupper);
+      if (word_tokens[i].capitalize) transform(word.begin(), word.end(), word.begin(), ::toupper);
       oss << word;
-      if(i < words.size() -1)
-        oss << " ";
+      if (i < words.size() - 1) oss << " ";
     }
     oss << endl;
     return oss.str();
@@ -51,7 +49,7 @@ struct Sentence
 
 int main(int ac, char* av[])
 {
-  Sentence sentence {"hello world"};
+  Sentence sentence{"hello world"};
   sentence[1].capitalize = true;
-  cout << sentence.str(); // prints "hello WORLD"
+  cout << sentence.str();  // prints "hello WORLD"
 }

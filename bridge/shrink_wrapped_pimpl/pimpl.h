@@ -2,19 +2,19 @@
 
 #include <memory>
 
-template <typename T> class pimpl
+template <typename T>
+class pimpl
 {
-private:
+ private:
   std::unique_ptr<T> impl;
-public:
+
+ public:
   pimpl();
   ~pimpl();
 
-  template <typename ...Args> pimpl
-    (Args&& ...args);
+  template <typename... Args>
+  pimpl(Args&&... args);
 
   T* operator->();
   T& operator*();
 };
-
-

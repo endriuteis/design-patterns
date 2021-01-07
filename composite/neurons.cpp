@@ -1,10 +1,7 @@
+#include <boost/predef/library/c.h>
 #include <cstdio>
-#include <vector>
 #include <iostream>
-#include <boost/predef/library/c.h>
-#include <boost/predef/library/c.h>
-#include <boost/predef/library/c.h>
-#include <boost/predef/library/c.h>
+#include <vector>
 using namespace std;
 
 struct Neuron;
@@ -12,7 +9,8 @@ struct Neuron;
 template <typename Self>
 struct SomeNeurons
 {
-  template <typename T> void connect_to(T& other)
+  template <typename T>
+  void connect_to(T& other)
   {
     for (Neuron& from : *static_cast<Self*>(this))
     {
@@ -73,13 +71,11 @@ struct NeuronLayer : vector<Neuron>, SomeNeurons<NeuronLayer>
 {
   NeuronLayer(int count)
   {
-    while (count-- > 0)
-      emplace_back(Neuron{});
+    while (count-- > 0) emplace_back(Neuron{});
   }
 
   friend ostream& operator<<(ostream& os, NeuronLayer& obj)
   {
-
     for (auto& n : obj) os << n;
     return os;
   }
@@ -99,7 +95,7 @@ int main()
   cout << "Neuron " << n3.id << endl << n3 << endl;
   cout << "Layer " << endl << l1 << endl;
 
-  NeuronLayer l2{ 2 }, l3{ 3 };
+  NeuronLayer l2{2}, l3{3};
   l2.connect_to(l3);
   cout << "Layer l2" << endl << l2;
   cout << "Layer l3" << endl << l3;

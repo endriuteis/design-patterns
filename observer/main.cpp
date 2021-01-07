@@ -5,14 +5,12 @@
 class Person : public SaferObservable<Person>
 {
   int age{0};
-public:
-  Person(){}
+
+ public:
+  Person() {}
   Person(int age) : age(age) {}
 
-  int get_age() const
-  {
-    return age;
-  }
+  int get_age() const { return age; }
 
   void set_age(int age)
   {
@@ -22,27 +20,22 @@ public:
     this->age = age;
     notify(*this, "age");
 
-    if (old_can_vote != get_can_vote())
-      notify(*this, "can_vote");
+    if (old_can_vote != get_can_vote()) notify(*this, "can_vote");
   }
 
-  bool get_can_vote() const {
-    return age >= 16;
-  }
+  bool get_can_vote() const { return age >= 16; }
 };
 
 // observer & observable
 
-struct ConsolePersonObserver
-  : public Observer<Person>
+struct ConsolePersonObserver : public Observer<Person>
 {
-private:
+ private:
   void field_changed(Person &source, const std::string &field_name) override
   {
     cout << "Person's " << field_name << " has changed to ";
     if (field_name == "age") cout << source.get_age();
-    if (field_name == "can_vote")
-      cout << boolalpha << source.get_can_vote();
+    if (field_name == "can_vote") cout << boolalpha << source.get_can_vote();
     cout << ".\n";
   }
 };
@@ -64,7 +57,7 @@ struct TrafficAdministration : Observer<Person>
   }
 };
 
-int main(int ac, char* av[])
+int main(int ac, char *av[])
 {
   Person p;
   TrafficAdministration ta;
@@ -76,7 +69,7 @@ int main(int ac, char* av[])
   {
     p.set_age(17);
   }
-  catch (const std::exception& e)
+  catch (const std::exception &e)
   {
     cout << "Oops, " << e.what() << "\n";
   }

@@ -11,117 +11,100 @@ using namespace std;
 
 struct Address
 {
-    string street;
-    string city;
-    int suite;
+  string street;
+  string city;
+  int suite;
 
-    Address() {}
+  Address() {}
 
-    Address(const string &street, const string &city, const int suite)
-        : street{street},
-          city{city},
-          suite{suite}
-    {
-    }
+  Address(const string &street, const string &city, const int suite) : street{street}, city{city}, suite{suite} {}
 
-    Address(const Address &address)
-        : street{address.street},
-          city{address.city},
-          suite{address.suite}
-    {
-    }
+  Address(const Address &address) : street{address.street}, city{address.city}, suite{address.suite} {}
 
-    friend ostream &operator<<(ostream &os, const Address &address)
-    {
-        return os
-               << "street: " << address.street
-               << " city: " << address.city
-               << " suite: " << address.suite;
-    }
+  friend ostream &operator<<(ostream &os, const Address &address)
+  {
+    return os << "street: " << address.street << " city: " << address.city << " suite: " << address.suite;
+  }
 
-private:
-    friend class boost::serialization::access;
+ private:
+  friend class boost::serialization::access;
 
-    template <class archive>
-    void serialize(archive &ar, const unsigned version)
-    {
-        ar &street;
-        ar &city;
-        ar &suite;
-    }
+  template <class archive>
+  void serialize(archive &ar, const unsigned version)
+  {
+    ar &street;
+    ar &city;
+    ar &suite;
+  }
 };
 
 struct Contact
 {
-    string name;
-    Address *address;
+  string name;
+  Address *address;
 
-    Contact() {}
+  Contact() {}
 
-    Contact(const string &name, Address *address)
-        : name{name}, address{address} {}
+  Contact(const string &name, Address *address) : name{name}, address{address} {}
 
-    Contact(const Contact &other)
-        : name{other.name}, address{new Address{*other.address}} {}
+  Contact(const Contact &other) : name{other.name}, address{new Address{*other.address}} {}
 
-    ~Contact() { delete address; }
+  ~Contact() { delete address; }
 
-    friend ostream &operator<<(ostream &os, const Contact &contact)
-    {
-        os << "name: " << contact.name << " address: " << *contact.address;
-        return os;
-    }
+  friend ostream &operator<<(ostream &os, const Contact &contact)
+  {
+    os << "name: " << contact.name << " address: " << *contact.address;
+    return os;
+  }
 
-private:
-    friend class boost::serialization::access;
+ private:
+  friend class boost::serialization::access;
 
-    template <class archive>
-    void serialize(archive &ar, const unsigned version)
-    {
-        ar &name;
-        ar &address;
-    }
+  template <class archive>
+  void serialize(archive &ar, const unsigned version)
+  {
+    ar &name;
+    ar &address;
+  }
 };
 
 struct EmployeeFactory
 {
-    static unique_ptr<Contact> NewMainOfficeEmployee(const string &name, const int suite)
-    {
-        static Contact p{"", new Address{"123 East Dr", "London", 0}};
-        return NewEmployee(name, suite, p);
-    }
+  static unique_ptr<Contact> NewMainOfficeEmployee(const string &name, const int suite)
+  {
+    static Contact p{"", new Address{"123 East Dr", "London", 0}};
+    return NewEmployee(name, suite, p);
+  }
 
-private:
-    static unique_ptr<Contact> NewEmployee(const string &name, const int suite, const Contact &prototype)
-    {
-        auto result = make_unique<Contact>(prototype);
-        result->name = name;
-        result->address->suite = suite;
-        return result;
-    }
+ private:
+  static unique_ptr<Contact> NewEmployee(const string &name, const int suite, const Contact &prototype)
+  {
+    auto result = make_unique<Contact>(prototype);
+    result->name = name;
+    result->address->suite = suite;
+    return result;
+  }
 };
 
 int main()
 {
-    auto clone = [](const Contact &c) {
-        ostringstream oss;
-        boost::archive::text_oarchive oa(oss);
-        oa << c;
-        string s = oss.str();
-        cout << s << endl;
+  auto clone = [](const Contact &c) {
+    ostringstream oss;
+    boost::archive::text_oarchive oa(oss);
+    oa << c;
+    string s = oss.str();
+    cout << s << endl;
 
-        istringstream iss(s);
-        boost::archive::text_iarchive ia(iss);
-        Contact result;
-        ia >> result;
-        return result;
-    };
-    auto john = EmployeeFactory::NewMainOfficeEmployee("John", 123);
-    auto jane = clone(*john);
+    istringstream iss(s);
+    boost::archive::text_iarchive ia(iss);
+    Contact result;
+    ia >> result;
+    return result;
+  };
+  auto john = EmployeeFactory::NewMainOfficeEmployee("John", 123);
+  auto jane = clone(*john);
 
-    cout
-        << *john << endl
-        << jane << endl;
+  cout << *john << endl << jane << endl;
 
-    return 0;
+  return 0;
 }

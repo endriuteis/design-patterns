@@ -1,17 +1,15 @@
 ﻿#include <iostream>
+#include <memory>
 #include <string>
 #include <vector>
-#include <memory>
 using namespace std;
 
 class Memento
 {
   int balance;
-public:
-  Memento(int balance)
-    : balance(balance)
-  {
-  }
+
+ public:
+  Memento(int balance) : balance(balance) {}
   friend class BankAccount;
   friend class BankAccount2;
 };
@@ -19,37 +17,29 @@ public:
 class BankAccount
 {
   int balance = 0;
-public:
-  explicit BankAccount(const int balance)
-    : balance(balance)
-  {
-  }
+
+ public:
+  explicit BankAccount(const int balance) : balance(balance) {}
 
   Memento deposit(int amount)
   {
     balance += amount;
-    return { balance };
+    return {balance};
   }
 
-  void restore(const Memento& m)
-  {
-    balance = m.balance;
-  }
+  void restore(const Memento& m) { balance = m.balance; }
 
-  friend ostream& operator<<(ostream& os, const BankAccount& obj)
-  {
-    return os << "balance: " << obj.balance;
-  }
+  friend ostream& operator<<(ostream& os, const BankAccount& obj) { return os << "balance: " << obj.balance; }
 };
 
-class BankAccount2 // supports undo/redo
+class BankAccount2  // supports undo/redo
 {
   int balance = 0;
   vector<shared_ptr<Memento>> changes;
   int current;
-public:
-  explicit BankAccount2(const int balance)
-  : balance(balance)
+
+ public:
+  explicit BankAccount2(const int balance) : balance(balance)
   {
     changes.emplace_back(make_shared<Memento>(balance));
     current = 0;
@@ -83,7 +73,7 @@ public:
       balance = m->balance;
       return m;
     }
-    return{};
+    return {};
   }
 
   shared_ptr<Memento> redo()
@@ -95,20 +85,17 @@ public:
       balance = m->balance;
       return m;
     }
-    return{};
+    return {};
   }
 
-  friend ostream& operator<<(ostream& os, const BankAccount2& obj)
-  {
-    return os << "balance: " << obj.balance;
-  }
+  friend ostream& operator<<(ostream& os, const BankAccount2& obj) { return os << "balance: " << obj.balance; }
 };
 
 void memento()
 {
-  BankAccount ba{ 100 };
-  auto m1 = ba.deposit(50); // 150
-  auto m2 = ba.deposit(25); // 175
+  BankAccount ba{100};
+  auto m1 = ba.deposit(50);  // 150
+  auto m2 = ba.deposit(25);  // 175
   cout << ba << "\n";
 
   // undo to m1
@@ -122,9 +109,9 @@ void memento()
 
 void undo_redo()
 {
-  BankAccount2 ba{ 100 };
+  BankAccount2 ba{100};
   ba.deposit(50);
-  ba.deposit(25); // 125
+  ba.deposit(25);  // 125
   cout << ba << "\n";
 
   ba.undo();
