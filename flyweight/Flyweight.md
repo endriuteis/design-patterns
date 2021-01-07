@@ -17,8 +17,9 @@ A space optimization technique that lets us use less memory by storing externall
 
 ## Summary
 
-- Build a Façade to provide a simplified API over a set of classes.
-- May wish to expose internals through the façade.
-- May allow users to 'escalate' to use more complex APIs if they need to.
+- Store common data externally
+   - E.g., static map
+- Define the idea of ranges on homogeneous collections
+   - Sore data related to those ranges
 
 
