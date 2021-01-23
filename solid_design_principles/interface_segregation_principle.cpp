@@ -1,7 +1,3 @@
-/*
-    "Don't put too much into an interface; spit into separate interfaces."
-*/
-
 #include <boost/lexical_cast.hpp>
 #include <cstdio>
 #include <fstream>

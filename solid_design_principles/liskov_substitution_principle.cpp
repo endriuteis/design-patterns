@@ -1,7 +1,3 @@
-/*
-    "You should be able to substitute a base type for a subtype."
-*/
-
 #include <boost/lexical_cast.hpp>
 #include <cstdio>
 #include <fstream>

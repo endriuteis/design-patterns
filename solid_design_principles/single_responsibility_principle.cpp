@@ -1,7 +1,3 @@
-/*
-    "A class should have only one reason to change"
-*/
-
 #include <boost/lexical_cast.hpp>
 #include <cstdio>
 #include <fstream>

@@ -1,7 +1,3 @@
-/*
-    "Classes should be open for extension but closed for modification"
-*/
-
 #include <boost/lexical_cast.hpp>
 #include <cstdio>
 #include <fstream>

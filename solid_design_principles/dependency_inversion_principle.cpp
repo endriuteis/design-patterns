@@ -1,7 +1,3 @@
-/*
-    "High level modules should not depend on low-level modules; use abstractions."
-*/
-
 #include <cstdio>
 #include <fstream>
 #include <iostream>
