@@ -9,7 +9,7 @@ Also known as a policy (esp. in the C++ world).
 
 ## Motivation
 
-- Many algorithms can be decomposed into higher- and lowe-level parts.
+- Many algorithms can be decomposed into higher- and lower-level parts.
 - Making tea can be decomposed into:
   - The process of making a hot beverage (boil water, pour into cup); and
   - Tea-specific things (put teabag into water).
